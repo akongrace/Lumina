@@ -57,9 +57,9 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Pickup Code</label>
-            <input type="text" name="pickup_code" class="form-control" placeholder="Enter unique pickup code" required>
-        </div>
+            <small class="text-muted">
+                Pickup Code will be generated automatically and will be visible after the student is created.</small>
+            </div>
 
         <button type="submit" class="btn btn-success w-100">Save Student</button>
     </form>

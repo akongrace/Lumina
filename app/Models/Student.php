@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Database\Eloquent\factories\hasfactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
-class Student extends model
+class Student extends Model
 {
-    use hasfactory;
+    use HasFactory;
     protected $fillable=[
         'student_id',
         'name',
@@ -17,5 +18,29 @@ class Student extends model
         'parent_email',
         'pickup_code',
     ];
-    //
+
+    protected static function booted()
+    {
+        static::creating(function ($student) {
+            if (empty($student->pickup_code)) {
+                $student->pickup_code = static::generateUniquePickupCode();
+            }
+
+            $student->student_id = 'STU' . strtoupper(Str::random(8));
+        });
+    }
+
+    
+    /**
+     * @param int $length
+     * @return string
+     */
+    public static function generateUniquePickupCode($length = 6)
+    {
+        do {
+            $code = Str::upper(Str::random($length));
+        } while (static::where('pickup_code', $code)->exists());
+
+        return $code;
+    }
 }
