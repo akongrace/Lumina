@@ -10,6 +10,7 @@
 
 <div class="container mt-5">
     <h2 class="mb-4 text-center">Edit Student</h2>
+    <a href="{{ route('students.edit', $student->id) }}" >
 
     <a href="{{ route('students.index') }}" class="btn btn-secondary mb-3">← Back</a>
 
@@ -27,45 +28,15 @@
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
-            <label class="form-label">Student Name</label>
-            <input type="text" name="name" class="form-control" value="{{ $student->name }}" required>
-        </div>
+  <form action="{{ route('students.update', $student->id) }}" method="POST">
+    @csrf
+    @method('PUT')
 
-        <div class="mb-3">
-            <label class="form-label">Class</label>
-            <input type="text" name="class" class="form-control" value="{{ $student->class }}" required>
-        </div>
+    <input type="text" name="section" value="{{ $student->section }}">
+    <input type="text" name="parent_name" value="{{ $student->parent_name }}">
+    <input type="text" name="parent_contact" value="{{ $student->parent_contact }}">
+    <input type="text" name="parent_email" value="{{ $student->parent_email }}">
+    <input type="text" name="pickup_code" value="{{ $student->pickup_code }}">
 
-        <div class="mb-3">
-            <label class="form-label">Section</label>
-            <input type="text" name="section" class="form-control" value="{{ $student->section }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Parent Name</label>
-            <input type="text" name="parent_name" class="form-control" value="{{ $student->parent_name }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Parent Contact</label>
-            <input type="text" name="parent_contact" class="form-control" value="{{ $student->parent_contact }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Parent Email</label>
-            <input type="email" name="parent_email" class="form-control" value="{{ $student->parent_email }}" required>
-        </div>
-
-        <div class="mb-3">
-            <small class="text-muted">
-               <label class="form-label">Pickup Code</label>
-               <input type="text" class ="form-control" value="{{ $student->pickup_code }}" readonly> Pickup Code cannot be changed.</small>
-            </div>
-
-        <button type="submit" class="btn btn-success w-100">Update Student</button>
-    </form>
-</div>
-
-</body>
-</html>
+    <button type="submit">Update</button>
+</form>
