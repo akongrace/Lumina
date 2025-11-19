@@ -16,6 +16,8 @@
     </div>
 
     @if(session('success'))
+    <div style="padding: 12px;
+     background-color:aliceblue: #d4edda; border: 1px solid #c3e6cb; color: #155724; margin-bottom: 15px; border-radius: 5px;">
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
@@ -27,7 +29,7 @@
                 <th>Class</th>
                 <th>Section</th>
                 <th>Parent Name</th>
-                <th>Parent Contact</th>
+                <th>Parent phone</th>
                 <th>Parent Email</th>
                 <th>Pickup Code</th>
                 <th>Actions</th>
@@ -47,6 +49,7 @@
                     <td>
                         <a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-warning">Edit</a>
                         <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('students.store',)}}" method="POST>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger"
