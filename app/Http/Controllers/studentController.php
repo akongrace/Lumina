@@ -4,87 +4,74 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Http\Controllers\StudentController;
 
 class StudentController extends Controller
 {
-    // Display all students
+
     public function index()
     {
         $students = Student::all();
         return view('students.index', compact('students'));
     }
 
-    // Show create form
+
     public function create()
     {
         return view('students.create');
     }
 
-    // Store student
+
     public function store(Request $request)
     {
         $request->validate([
-            'name'           => 'required|string|max:255',
-            'class'          => 'required|string|max:255',
-            'section'        => 'required|string|max:255',
-            'parent_name'    => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'class' => 'required|string|max:255',
+            'section' => 'required|string|max:255',
+            'parent_name' => 'required|string|max:255',
             'parent_contact' => 'required|string|max:255',
-            'parent_email'   => 'required|email|max:255',
-            'pickup_code'    => 'required|string|max:255|unique:students,pickup_code',
+            'parent_email' => 'required|email|max:255',
+            'pickup_code' => 'required|string|unique:students,pickup_code|max:255',
         ]);
 
-        $student = new Student();
-        $student->name           = $request->name;
-        $student->class          = $request->class;
-        $student->section        = $request->section;
-        $student->parent_name    = $request->parent_name;
-        $student->parent_contact = $request->parent_contact;
-        $student->parent_email   = $request->parent_email;
-        $student->pickup_code    = $request->pickup_code;
-        $student->save();
+        Student::create($request->all());
 
-        return redirect()->route('students.index');
+        return redirect()->route('students.index')->with('success', 'Student added successfully!');
     }
 
-    // Show edit form
+
     public function edit($id)
     {
         $student = Student::findOrFail($id);
         return view('students.edit', compact('student'));
     }
 
-    // Update student
+
     public function update(Request $request, $id)
     {
+        $student = Student::findOrFail($id);
+
         $request->validate([
-            'name'           => 'required|string|max:255',
-            'class'          => 'required|string|max:255',
-            'section'        => 'required|string|max:255',
-            'parent_name'    => 'required|string|max:255',
-            'parent_contact' => 'required|string|max:255',
-            'parent_email'   => 'required|email|max:255',
-            'pickup_code'    => "required|string|max:255|unique:students,pickup_code,$id",
+            'name' => 'required',
+            'class' => 'required',
+            'section' => 'required',
+            'parent_name' => 'required',
+            'parent_contact' => 'required',
+            'parent_email' => 'required|email',
+            'pickup_code' => 'required|unique:students,pickup_code,' . $student->id,
         ]);
 
-        $student = Student::findOrFail($id);
-        $student->name           = $request->name;
-        $student->class          = $request->class;
-        $student->section        = $request->section;
-        $student->parent_name    = $request->parent_name;
-        $student->parent_contact = $request->parent_contact;
-        $student->parent_email   = $request->parent_email;
-        $student->pickup_code    = $request->pickup_code;
-        $student->save();
+        $student->update($request->all());
 
-        return redirect()->route('students.index');
+        return redirect()->route('students.index')->with('success', 'Student updated successfully!');
     }
 
-    // Delete student
+    
     public function destroy($id)
     {
         $student = Student::findOrFail($id);
         $student->delete();
 
-        return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
+        return redirect()->route('students.index')->with('success', 'Student deleted successfully!');
     }
 }
