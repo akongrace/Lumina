@@ -62,6 +62,11 @@
             <input type="text" name="pickup_code" class="form-control" value="{{ $student->pickup_code }}" required>
         </div>
 
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" name="address" class="form-control" value="{{ $student->address }}">
+        </div>
+
         <button type="submit" class="btn btn-success w-100">Update Student</button>
     </form>
 </div>

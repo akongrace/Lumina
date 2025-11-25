@@ -32,6 +32,11 @@ class StudentController extends Controller
             'parent_contact' => 'required|string|max:255',
             'parent_email' => 'required|email|max:255',
             'pickup_code' => 'required|string|unique:students,pickup_code|max:255',
+            'address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
+            'zip_code' => 'nullable|string|max:20',
+            'country' => 'nullable|string|max:255',
         ]);
 
         Student::create($request->all());
@@ -58,6 +63,7 @@ class StudentController extends Controller
             'parent_name' => 'required',
             'parent_contact' => 'required',
             'parent_email' => 'required|email',
+            
             'pickup_code' => 'required|unique:students,pickup_code,' . $student->id,
         ]);
 
