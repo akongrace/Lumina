@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
-use App\Http\Controllers\StudentController;
 
 class StudentController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::all();
-        return view('students.index', compact('students'));
-    }
+        $search = $request->input('search');
+        $students = Student::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%")
+                         ->orWhere('nim', 'like', "%{$search}%");
+        })->paginate(10);
 
+        return view('students.index', compact('students', 'search'));
+    }
 
     public function create()
     {
@@ -63,7 +66,11 @@ class StudentController extends Controller
             'parent_name' => 'required',
             'parent_contact' => 'required',
             'parent_email' => 'required|email',
-            
+            'address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
+            'zip_code' => 'nullable|string|max:20',
+            'country' => 'nullable|string|max:255',
             'pickup_code' => 'required|unique:students,pickup_code,' . $student->id,
         ]);
 
@@ -72,7 +79,6 @@ class StudentController extends Controller
         return redirect()->route('students.index')->with('success', 'Student updated successfully!');
     }
 
-    
     public function destroy($id)
     {
         $student = Student::findOrFail($id);

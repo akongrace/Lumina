@@ -68,6 +68,8 @@
         </div>
 
         <button type="submit" class="btn btn-success w-100">Update Student</button>
+
+        
     </form>
 </div>
 

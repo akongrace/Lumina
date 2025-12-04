@@ -13,10 +13,11 @@ return new class extends Migration
             $table->id();
             $table->string('student_id') ->unique();
             $table->string('name');
+            $table->string('nim')->nullable();
             $table->string('class');
             $table->string('section')->nullable();
-            $table->string('parent_name');
-            $table->string('parent_contact');
+            $table->string('parent_name')->nullable();
+            $table->string('parent_contact')->nullable();
             $table->string('parent_email')->nullable();
             $table->string('pickup_code')->unique();
             $table->timestamps();

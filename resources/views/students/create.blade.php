@@ -62,6 +62,31 @@
         </div>
 
         <button type="submit" class="btn btn-success w-100">Save Student</button>
+
+        <div class="mb-3">
+    <label class="form-label">Address</label>
+    <input type="text" name="address" class="form-control" > 
+</div>
+
+<div class="mb-3">
+    <label class="form-label">city</label>
+    <input type="text" name="city" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">State</label>
+    <input type="text" name="state" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Zip Code</label>
+    <input type="text" name="zip_code" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label class=form-label>Country</label>
+    <input type="text" name="country" class="form-control">
+</div>
     </form>
 </div>
 

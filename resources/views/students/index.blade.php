@@ -19,6 +19,13 @@
         Add Student
     </a>
 
+    <form method="GET" action="{{ route('students.index') }}" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control" placeholder="Search by Name or NIM...">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+
     <div class="card shadow-sm">
         <div class="card-body">
 
@@ -27,6 +34,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Class</th>
+                        <th>nim</th>
                         <th>Parent Name</th>
                         <th>Parent Contact</th>
                         <th>Pickup Code</th>
@@ -39,6 +47,7 @@
                         <tr>
                             <td>{{ $student->name }}</td>
                             <td>{{ $student->class }}</td>
+                            <td>{{ $student->nim }}</td>
                             <td>{{ $student->parent_name }}</td>
                             <td>{{ $student->parent_contact }}</td>
                             <td>{{ $student->pickup_code }}</td>
@@ -75,6 +84,9 @@
         </div>
     </div>
 
+</div>
+<div class="mb-3">
+    {{ $students->links() }}
 </div>
 
 </body>
