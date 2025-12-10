@@ -13,9 +13,11 @@ return new class extends Migration
             $table->id();
             $table->string('student_id') ->unique();
             $table->string('name');
-            $table->string('nim')->nullable();
+            $table->string('gender')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->string('class');
             $table->string('section')->nullable();
+            $table->string('nim')->unique();
             $table->string('parent_name')->nullable();
             $table->string('parent_contact')->nullable();
             $table->string('parent_email')->nullable();

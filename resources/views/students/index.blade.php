@@ -33,7 +33,10 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Name</th>
+                        <th>gender</th>
+                        <th>Date of Birth</th>
                         <th>Class</th>
+                        <th>Section</th>
                         <th>nim</th>
                         <th>Parent Name</th>
                         <th>Parent Contact</th>
@@ -46,7 +49,10 @@
                     @forelse ($students as $student)
                         <tr>
                             <td>{{ $student->name }}</td>
+                            <td>{{$student->gender}}</td>
+                            <td>{{ $student->date_of_birth }}</td>
                             <td>{{ $student->class }}</td>
+                            <td>{{ $student->section }}</td>
                             <td>{{ $student->nim }}</td>
                             <td>{{ $student->parent_name }}</td>
                             <td>{{ $student->parent_contact }}</td>

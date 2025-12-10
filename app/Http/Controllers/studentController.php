@@ -29,17 +29,17 @@ class StudentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'gender' => 'nullable|string|max:50',
+            'date_of_birth' => 'nullable|date',
             'class' => 'required|string|max:255',
+            'nim' => 'required|string|unique:students,nim|max:255',
             'section' => 'required|string|max:255',
             'parent_name' => 'required|string|max:255',
             'parent_contact' => 'required|string|max:255',
             'parent_email' => 'required|email|max:255',
             'pickup_code' => 'required|string|unique:students,pickup_code|max:255',
             'address' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:255',
-            'state' => 'nullable|string|max:255',
-            'zip_code' => 'nullable|string|max:20',
-            'country' => 'nullable|string|max:255',
+            
         ]);
 
         Student::create($request->all());
@@ -61,17 +61,17 @@ class StudentController extends Controller
 
         $request->validate([
             'name' => 'required',
+            'gender' => 'nullable|string|max:50',
+            'date_of_birth' => 'nullable|date',
             'class' => 'required',
+            'nim' => 'required',
             'section' => 'required',
             'parent_name' => 'required',
             'parent_contact' => 'required',
             'parent_email' => 'required|email',
             'address' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:255',
-            'state' => 'nullable|string|max:255',
-            'zip_code' => 'nullable|string|max:20',
-            'country' => 'nullable|string|max:255',
             'pickup_code' => 'required|unique:students,pickup_code,' . $student->id,
+
         ]);
 
         $student->update($request->all());

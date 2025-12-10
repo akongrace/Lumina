@@ -31,14 +31,30 @@
             <input type="text" name="name" class="form-control" placeholder="Enter student name" required>
         </div>
 
+        <label>gender</label>
+        <select name="gender" class="form-select mb-3">
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value=" Female">Female</option>
+            <option value="Other">Other</option>    
+        </select> 
+        <label>Date of Birth</label>
+        <input type="date" name="date_of_birth" class="form-control mb-3">  
+
+           
         <div class="mb-3">
             <label class="form-label">Class</label>
             <input type="text" name="class" class="form-control" placeholder="Enter class" required>
         </div>
 
-        <div class="mb-3">
+         <div class="mb-3">
             <label class="form-label">Section</label>
             <input type="text" name="section" class="form-control" placeholder="Enter section" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">NIM</label>
+            <input type="text" name="nim" class="form-control" placeholder="Enter NIM" required>
         </div>
 
         <div class="mb-3">
@@ -61,34 +77,14 @@
             <input type="text" name="pickup_code" class="form-control" placeholder="Enter unique pickup code" required>
         </div>
 
-        <button type="submit" class="btn btn-success w-100">Save Student</button>
+       <div class="mb-3">
+       <label class="form-label">Address</label>
+       <input type="text" name="address" class="form-control" > 
+       </div>
 
-        <div class="mb-3">
-    <label class="form-label">Address</label>
-    <input type="text" name="address" class="form-control" > 
-</div>
-
-<div class="mb-3">
-    <label class="form-label">city</label>
-    <input type="text" name="city" class="form-control">
-</div>
-
-<div class="mb-3">
-    <label class="form-label">State</label>
-    <input type="text" name="state" class="form-control">
-</div>
-
-<div class="mb-3">
-    <label class="form-label">Zip Code</label>
-    <input type="text" name="zip_code" class="form-control">
-</div>
-
-<div class="mb-3">
-    <label class=form-label>Country</label>
-    <input type="text" name="country" class="form-control">
-</div>
+ <button type="submit" class="btn btn-success w-100">Save Student</button>
     </form>
-</div>
 
-</body>
-</html>
+  </div>
+ </body>
+ </html>

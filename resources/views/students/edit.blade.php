@@ -31,7 +31,16 @@
             <label class="form-label">Student Name</label>
             <input type="text" name="name" class="form-control" value="{{ $student->name }}" required>
         </div>
-
+        <select name="gender" class="form-select mb-3">
+            <option value="">Select gender</option>
+            <option value="Male" {{ $student->gender ==' Male'? 'selected' : '' }}>Male</option>  
+            <option value="Female" {{ $student  ->gender ==' Female '? 'selected' : '' }}>Female</option>
+            <option value="Other" {{ $student->gender ==' Other'? 'selected' : '' }}>Other</option>
+        </select>
+        <label>Date of Birth</label>
+        <input type="date" name="date_of_birth" class="form-control mb-3" value="{{ $student->date_of_birth }}">
+        
+        
         <div class="mb-3">
             <label class="form-label">Class</label>
             <input type="text" name="class" class="form-control" value="{{ $student->class }}" required>
@@ -40,6 +49,11 @@
         <div class="mb-3">
             <label class="form-label">Section</label>
             <input type="text" name="section" class="form-control" value="{{ $student->section }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">NIM</label>
+            <input type="text" name="nim" class="form-control" value="{{ $student->nim }}" required>
         </div>
 
         <div class="mb-3">
@@ -68,8 +82,7 @@
         </div>
 
         <button type="submit" class="btn btn-success w-100">Update Student</button>
-
-        
+   
     </form>
 </div>
 
