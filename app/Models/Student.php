@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -8,18 +9,20 @@ use Illuminate\Support\Str;
 class Student extends Model
 {
     use HasFactory;
-    protected $fillable=[
+
+    protected $fillable = [
         'student_id',
-        'name',
+        'student_name',
         'gender',
         'date_of_birth',
         'class',
-        'section',
+        'class_section',
         'nim',
         'parent_name',
         'parent_contact',
         'parent_email',
         'pickup_code',
+        'address',
     ];
 
     protected static function booted()
@@ -33,11 +36,6 @@ class Student extends Model
         });
     }
 
-    
-    /**
-     * @param int $length
-     * @return string
-     */
     public static function generateUniquePickupCode($length = 6)
     {
         do {

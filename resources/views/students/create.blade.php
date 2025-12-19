@@ -28,63 +28,64 @@
 
         <div class="mb-3">
             <label class="form-label">Student Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Enter student name" required>
+            <input type="text" name="student_name" class="form-control" required>
         </div>
 
-        <label>gender</label>
+        <label>Gender</label>
         <select name="gender" class="form-select mb-3">
             <option value="">Select gender</option>
             <option value="Male">Male</option>
-            <option value=" Female">Female</option>
-            <option value="Other">Other</option>    
-        </select> 
-        <label>Date of Birth</label>
-        <input type="date" name="date_of_birth" class="form-control mb-3">  
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
 
-           
+        <label>Date of Birth</label>
+        <input type="date" name="date_of_birth" class="form-control mb-3">
+
         <div class="mb-3">
             <label class="form-label">Class</label>
-            <input type="text" name="class" class="form-control" placeholder="Enter class" required>
+            <input type="text" name="class" class="form-control" required>
         </div>
 
-         <div class="mb-3">
-            <label class="form-label">Section</label>
-            <input type="text" name="section" class="form-control" placeholder="Enter section" required>
+        <div class="mb-3">
+            <label class="form-label">Class Section</label>
+            <input type="text" name="class_section" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label class="form-label">NIM</label>
-            <input type="text" name="nim" class="form-control" placeholder="Enter NIM" required>
+            <input type="text" name="nim" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Parent Name</label>
-            <input type="text" name="parent_name" class="form-control" placeholder="Enter parent name" required>
+            <input type="text" name="parent_name" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Parent Contact</label>
-            <input type="text" name="parent_contact" class="form-control" placeholder="Enter phone number" required>
+            <input type="text" name="parent_contact" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Parent Email</label>
-            <input type="email" name="parent_email" class="form-control" placeholder="Enter email" required>
+            <input type="email" name="parent_email" class="form-control" required>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Pickup Code</label>
-            <input type="text" name="pickup_code" class="form-control" placeholder="Enter unique pickup code" required>
+            <input type="text" name="pickup_code" class="form-control" required>
         </div>
 
-       <div class="mb-3">
-       <label class="form-label">Address</label>
-       <input type="text" name="address" class="form-control" > 
-       </div>
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" name="address" class="form-control">
+        </div>
 
- <button type="submit" class="btn btn-success w-100">Save Student</button>
+        <button type="submit" class="btn btn-success w-100">Save Student</button>
     </form>
 
-  </div>
- </body>
- </html>
+</div>
+
+</body>
+</html>

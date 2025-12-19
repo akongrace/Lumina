@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('student_id') ->unique();
-            $table->string('name');
+            $table->string('student_name');
             $table->string('gender')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('class');
