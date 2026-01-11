@@ -11,7 +11,6 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
-        'student_id',
         'student_name',
         'gender',
         'date_of_birth',
@@ -25,23 +24,17 @@ class Student extends Model
         'address',
     ];
 
-    protected static function booted()
+     protected static function booted()
     {
         static::creating(function ($student) {
+            // Generate pickup code ONLY if not set
             if (empty($student->pickup_code)) {
-                $student->pickup_code = static::generateUniquePickupCode();
+                do {
+                    $code = strtoupper(Str::random(6)); // e.g. A9F3KQ
+                } while (self::where('pickup_code', $code)->exists());
+
+                $student->pickup_code = $code;
             }
-
-            $student->student_id = 'STU' . strtoupper(Str::random(8));
         });
-    }
-
-    public static function generateUniquePickupCode($length = 6)
-    {
-        do {
-            $code = Str::upper(Str::random($length));
-        } while (static::where('pickup_code', $code)->exists());
-
-        return $code;
     }
 }

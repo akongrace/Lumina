@@ -43,8 +43,7 @@ class StudentController extends Controller
 
         Student::create($validated);
 
-        return redirect()->route('students.index')
-                         ->with('success', 'Student added successfully!');
+        return redirect()->route('students.index') ->with('success', 'Student added successfully!');
     }
     
 
@@ -65,21 +64,19 @@ class StudentController extends Controller
             'parent_name'    => 'required|string|max:255',
             'parent_contact' => 'required|string|max:255',
             'parent_email'   => 'required|email|max:255',
-            'pickup_code'    => 'required|string|unique:students,pickup_code,' . $student->id,
+            'pickup_code'    => 'nullable|string|unique:students,pickup_code,' . $student->id,
             'address'        => 'nullable|string|max:255',
         ]);
 
         $student->update($validated);
 
-        return redirect()->route('students.index')
-                         ->with('success', 'Student updated successfully!');
+        return redirect()->route('students.index')->with('success', 'Student updated successfully!');
     }
 
     public function destroy(Student $student)
     {
         $student->delete();
 
-        return redirect()->route('students.index')
-                         ->with('success', 'Student deleted successfully!');
+        return redirect()->route('students.index')->with('success', 'Student deleted successfully!');
     }
 }

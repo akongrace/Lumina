@@ -7,24 +7,25 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     
-    public function up(): void
-    {
-        Schema::create('students', function (Blueprint $table) {
-            $table->id();
-            $table->string('student_id') ->unique();
-            $table->string('student_name');
-            $table->string('gender')->nullable();
-            $table->date('date_of_birth')->nullable();
-            $table->string('class');
-            $table->string('section')->nullable();
-            $table->string('nim')->unique();
-            $table->string('parent_name')->nullable();
-            $table->string('parent_contact')->nullable();
-            $table->string('parent_email')->nullable();
-            $table->string('pickup_code')->unique();
-            $table->timestamps();
-        });
-    }
+public function up(): void
+{
+    Schema::create('students', function (Blueprint $table) {
+        $table->id();
+        $table->string('student_name');
+        $table->string('gender')->nullable();
+        $table->date('date_of_birth')->nullable();
+        $table->string('class');
+        $table->string('class_section')->nullable();
+        $table->string('nim')->unique();
+        $table->string('parent_name')->nullable();
+        $table->string('parent_contact')->nullable();
+        $table->string('parent_email')->nullable();
+        $table->string('pickup_code')->unique()->nullable();
+        $table->timestamps();
+    });
+}
+        
+
 
 
     public function down(): void
