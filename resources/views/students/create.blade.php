@@ -23,8 +23,13 @@
         </div>
     @endif
 
-    <form action="{{ route('students.store') }}" method="POST" class="card p-4 shadow-sm bg-white">
+    <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm bg-white">
         @csrf
+         <div class="mb-3">
+            <label class="form-label">Student Photo</label>
+            <input type="file" name="photo" class="form-control">  
+             
+         </div>
 
         <div class="mb-3">
             <label class="form-label">Student Name</label>
@@ -41,6 +46,7 @@
 
         <label>Date of Birth</label>
         <input type="date" name="date_of_birth" class="form-control mb-3">
+
 
         <div class="mb-3">
             <label class="form-label">Class</label>

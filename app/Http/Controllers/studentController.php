@@ -32,6 +32,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'photo'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'student_name'   => 'required|string|max:255',
             'gender'         => 'nullable|string|max:50',
             'date_of_birth'  => 'nullable|date',
@@ -45,13 +46,17 @@ class StudentController extends Controller
             'address'        => 'nullable|string|max:255',
         ]);
 
+      if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('photos', 'public');
+            $validated['photo'] = $path;
+
+  
+        }
         Student::create($validated);
 
         return redirect()->route('students.index') ->with('success', 'Student added successfully!');
     }
-    
-
-    public function edit(Student $student)
+        public function edit(Student $student)
     {
         return view('students.edit', compact('student'));
     }
@@ -92,6 +97,12 @@ class StudentController extends Controller
     $student->restore();
 
     return redirect()->route('students.index')->with('success', 'Student restored successfully!');
+
+  }
+
+public function show(Student $student)
+{
+    return view('students.show', compact('student'));
 }
 }
 

@@ -24,8 +24,13 @@
         </div>
     @endif
 
-    <form action="{{ route('students.update', $student->id) }}" method="POST" class="card p-4 shadow-sm bg-white">
+    <form action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data" class="p-4 shadow-sm bg-white">
         @csrf
+        <div class = "mb-3">
+            <label class="form-label">Student Photo</label>
+            <input type="file" name="photo" class="form-control" value="{{ $student->photo }}">   
+         </div>
+         
         @method('PUT')
 
         <div class="mb-3">

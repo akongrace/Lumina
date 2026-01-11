@@ -33,7 +33,7 @@
 <div class="container mt-5">
 
     <h2 class="text-center mb-4 fw-bold">Students List</h2>
-
+     
     <a href="{{ route('students.create') }}" class="btn btn-success mb-3">Add Student</a>
 
     <form method="GET" action="{{ route('students.index') }}" class="mb-3">
@@ -49,6 +49,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
+                        <th>Photo</th>
                         <th>Student Name</th>
                         <th>Gender</th>
                         <th>Date of Birth</th>
@@ -66,57 +67,55 @@
                 <tbody>
                    <tbody>
     @forelse($students as $student)
-    <tr>
-        <td>{{ $student->id }}</td>
-        <td>{{ $student->student_name }}</td>
-        <td>{{ $student->gender }}</td>
-        <td>{{ $student->date_of_birth }}</td>
-        <td>{{ $student->class }}</td>
-        <td>{{ $student->class_section }}</td>
-        <td>{{ $student->nim }}</td>
-        <td>{{ $student->parent_name }}</td>
-        <td>{{ $student->parent_contact }}</td>
-        <td>{{ $student->parent_email }}</td>
-        <td>{{ $student->pickup_code }}</td>
+<tr>
+    <td>{{ $student->id }}</td>
 
-        <td>
-            @if($student->trashed())
-                {{-- Restore --}}
-                <form action="{{ route('students.restore', $student->id) }}" method="POST" style="display:inline-block;">
-                    @csrf
-                    @method('PATCH')
-                    <button class="btn btn-warning btn-sm">Restore</button>
-                </form>
-            @else
-                {{-- Edit --}}
-                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-sm">Edit</a>
+    <td>
+        @if ($student->photo)
+            <img src="{{ asset('storage/'.$student->photo) }}"
+                 width="50" height="50"
+                 class="rounded-circle">
+        @else
+            —
+        @endif
+    </td>
 
-                {{-- Soft Delete --}}
-                <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline-block;">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger btn-sm"
+    <td>{{ $student->student_name }}</td>
+    <td>{{ $student->gender }}</td>
+    <td>{{ $student->date_of_birth }}</td>
+    <td>{{ $student->class }}</td>
+    <td>{{ $student->class_section }}</td>
+    <td>{{ $student->nim }}</td>
+    <td>{{ $student->parent_name }}</td>
+    <td>{{ $student->parent_contact }}</td>
+    <td>{{ $student->parent_email }}</td>
+    <td>{{ $student->pickup_code }}</td>
+
+    <td>
+        @if($student->trashed())
+            <form action="{{ route('students.restore', $student->id) }}" method="POST" style="display:inline-block;">
+                @csrf
+                @method('PATCH')
+                <button class="btn btn-warning btn-sm">Restore</button>
+            </form>
+        @else
+            <a href="{{ route('students.show', $student->id) }}" class="btn btn-info btn-sm">View</a>
+
+            <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-sm">Edit</a>
+
+            <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline-block;">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger btn-sm"
                         onclick="return confirm('Are you sure?')">
-                        Delete
-                    </button>
-                </form>
-            @endif
-        </td>
-    </tr>
+                    Delete
+                </button>
+            </form>
+        @endif
+    </td>
+</tr>
 @empty
-    <tr>
-        <td colspan="12" class="text-center">No students found.</td>
-    </tr>
+<tr>
+    <td colspan="13" class="text-center">No students found.</td>
+</tr>
 @endforelse
-</tbody>
-            </table>
-
-            {{-- Pagination Links --}}
-            <div class="d-flex justify-content-center">
-                {{ $students->withQueryString()->links() }}
-            </div>
-        </div>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body> 

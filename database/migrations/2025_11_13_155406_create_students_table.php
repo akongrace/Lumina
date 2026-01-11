@@ -11,6 +11,7 @@ public function up(): void
 {
     Schema::create('students', function (Blueprint $table) {
         $table->id();
+        $table->string('photo')->nullable();
         $table->string('student_name');
         $table->string('gender')->nullable();
         $table->date('date_of_birth')->nullable();

@@ -4,3 +4,4 @@ use App\Http\Controllers\StudentController;
 
 route::resource('students', StudentController::class);
 Route::patch('/students/{id}/restore', [StudentController::class, 'restore'])->name('students.restore');
+route::get('/students/{student}', [StudentController::class, 'show'])->name('students.show');
