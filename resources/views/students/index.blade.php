@@ -8,6 +8,28 @@
 </head>
 <body class="bg-light">
 
+     @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    <script>
+        setTimeout(()=>{
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.classList.remove('show');
+              
+            });
+        },3000);  
+    </script>
+
 <div class="container mt-5">
 
     <h2 class="text-center mb-4 fw-bold">Students List</h2>
@@ -42,45 +64,59 @@
                 </thead>
 
                 <tbody>
-                    @forelse($students as $student)
-                        <tr>
-                            <td>{{ $student->id }}</td>
-                            <td>{{ $student->student_name }}</td>
-                            <td>{{ $student->gender }}</td>
-                            <td>{{ $student->date_of_birth }}</td>
-                            <td>{{ $student->class }}</td>
-                            <td>{{ $student->class_section }}</td>
-                            <td>{{ $student->nim }}</td>
-                            <td>{{ $student->parent_name }}</td>
-                            <td>{{ $student->parent_contact }}</td>
-                            <td>{{ $student->parent_email }}</td>
-                            <td>{{ $student->pickup_code }}</td>
+                   <tbody>
+    @forelse($students as $student)
+    <tr>
+        <td>{{ $student->id }}</td>
+        <td>{{ $student->student_name }}</td>
+        <td>{{ $student->gender }}</td>
+        <td>{{ $student->date_of_birth }}</td>
+        <td>{{ $student->class }}</td>
+        <td>{{ $student->class_section }}</td>
+        <td>{{ $student->nim }}</td>
+        <td>{{ $student->parent_name }}</td>
+        <td>{{ $student->parent_contact }}</td>
+        <td>{{ $student->parent_email }}</td>
+        <td>{{ $student->pickup_code }}</td>
 
-                            <td>
-                                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-sm">Edit</a>
+        <td>
+            @if($student->trashed())
+                {{-- Restore --}}
+                <form action="{{ route('students.restore', $student->id) }}" method="POST" style="display:inline-block;">
+                    @csrf
+                    @method('PATCH')
+                    <button class="btn btn-warning btn-sm">Restore</button>
+                </form>
+            @else
+                {{-- Edit --}}
+                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-sm">Edit</a>
 
-                                <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr><td colspan="12" class="text-center">No students found.</td></tr>
-                    @endforelse
-                </tbody>
-
+                {{-- Soft Delete --}}
+                <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-sm"
+                        onclick="return confirm('Are you sure?')">
+                        Delete
+                    </button>
+                </form>
+            @endif
+        </td>
+    </tr>
+@empty
+    <tr>
+        <td colspan="12" class="text-center">No students found.</td>
+    </tr>
+@endforelse
+</tbody>
             </table>
+
+            {{-- Pagination Links --}}
+            <div class="d-flex justify-content-center">
+                {{ $students->withQueryString()->links() }}
+            </div>
         </div>
     </div>
-
-    <div class="mt-3">
-        {{ $students->links() }}
-    </div>
-
 </div>
-
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body> 

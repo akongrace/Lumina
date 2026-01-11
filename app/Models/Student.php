@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Student extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'student_name',
@@ -27,6 +28,7 @@ class Student extends Model
      protected static function booted()
     {
         static::creating(function ($student) {
+            $student->nim=preg_replace('/\s+/', '', $student->nim);
             // Generate pickup code ONLY if not set
             if (empty($student->pickup_code)) {
                 do {

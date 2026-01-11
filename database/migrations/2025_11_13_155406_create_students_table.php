@@ -22,6 +22,7 @@ public function up(): void
         $table->string('parent_email')->nullable();
         $table->string('pickup_code')->unique()->nullable();
         $table->timestamps();
+        $table->softDeletes();
     });
 }
         

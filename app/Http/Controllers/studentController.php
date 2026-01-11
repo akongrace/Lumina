@@ -11,10 +11,15 @@ class StudentController extends Controller
     {
         $search = $request->input('search');
 
-        $students = Student::when($search, function ($query, $search) {
-            $query->where('student_name', 'like', "%{$search}%")
-                  ->orWhere('nim', 'like', "%{$search}%");
-        })->paginate(10);
+        $students = Student::withTrashed()
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('student_name', 'like', "%{$search}%")
+                      ->orWhere('nim', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10);
 
         return view('students.index', compact('students', 'search'));
     }
@@ -23,7 +28,6 @@ class StudentController extends Controller
     {
         return view('students.create');
     }
-
 
     public function store(Request $request)
     {
@@ -79,4 +83,15 @@ class StudentController extends Controller
 
         return redirect()->route('students.index')->with('success', 'Student deleted successfully!');
     }
+
+
+  public function restore($id)
+  {
+         
+    $student = Student::withTrashed()->findOrFail($id);
+    $student->restore();
+
+    return redirect()->route('students.index')->with('success', 'Student restored successfully!');
 }
+}
+
