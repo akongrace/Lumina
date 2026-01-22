@@ -7,14 +7,19 @@
 </head>
 <body class="bg-light">
 
-  @if ($student->photo)
-    <img src="{{ asset('storage/' . $student->photo) }}" alt="Student Photo" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
-  @endif
-    </div>
-
 <div class="container mt-5">
 
     <a href="{{ route('students.index') }}" class="btn btn-secondary mb-3">← Back</a>
+
+    {{-- Student Photo --}}
+    @if ($student->photo)
+        <div class="text-center mb-4">
+            <img src="{{ asset('storage/' . $student->photo) }}"
+                 alt="Student Photo"
+                 class="rounded-circle"
+                 style="width:150px;height:150px;object-fit:cover;">
+        </div>
+    @endif
 
     <div class="card shadow-sm">
         <div class="card-body">
@@ -54,9 +59,16 @@
                     <th>Parent Email</th>
                     <td>{{ $student->parent_email }}</td>
                 </tr>
+
                 <tr>
                     <th>Pickup Code</th>
-                    <td><span class="badge bg-success">{{ $student->pickup_code }}</span></td>
+                    <td>
+                        @if(auth()->user()->role === 'Admin')
+                            <span class="badge bg-success">{{ $student->pickup_code }}</span>
+                        @else
+                            <span class="badge bg-secondary">Hidden</span>
+                        @endif
+                    </td>
                 </tr>
             </table>
 
