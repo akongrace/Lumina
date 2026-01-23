@@ -9,13 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('Teacher');
-            //
-        });
-    }
+public function up(): void
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->string('role')->default('teacher');
+    });
+}
 
     /**
      * Reverse the migrations.
@@ -27,4 +26,6 @@ return new class extends Migration
             
         });
     }
-};
+}
+
+;

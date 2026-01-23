@@ -10,19 +10,20 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('teacher')->after('password');
+{
+        Schema::table('students', function (Blueprint $table) {
+            $table->softDeletes();
             //
         });
-    }
+        }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('students', function (Blueprint $table) {
+            $table->dropSoftDeletes();
             //
         });
     }

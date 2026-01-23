@@ -63,7 +63,7 @@
                 <tr>
                     <th>Pickup Code</th>
                     <td>
-                        @if(auth()->user()->role === 'Admin')
+                        @if(auth()->user()->role === 'admin')
                             <span class="badge bg-success">{{ $student->pickup_code }}</span>
                         @else
                             <span class="badge bg-secondary">Hidden</span>

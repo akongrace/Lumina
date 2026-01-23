@@ -24,6 +24,7 @@
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
         }
 
         h1{
@@ -43,6 +44,8 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-admin{
@@ -73,6 +76,21 @@
             background: #eafaf1;
             color: #198754;
         }
+
+        /* Logout button style */
+        .logout-form{
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .btn-logout{
+            background: #dc3545;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -80,12 +98,18 @@
 <div class="container">
     <div class="card">
 
+        {{-- LOGOUT BUTTON --}}
+        <form method="POST" action="{{ route('logout') }}" class="logout-form">
+            @csrf
+            <button type="submit" class="btn btn-logout">Logout</button>
+        </form>
+
         {{-- ADMIN DASHBOARD --}}
         @if(auth()->user()->role === 'admin')
 
             <span class="role-badge badge-admin">Admin</span>
 
-            <h1>Admin Dashboard </h1>
+            <h1>Admin Dashboard</h1>
             <p>Welcome Admin! You can manage student records, update details, and protect pickup codes.</p>
 
             <a href="{{ route('students.index') }}" class="btn btn-admin">Manage Students</a>
@@ -95,7 +119,7 @@
 
             <span class="role-badge badge-teacher">Teacher</span>
 
-            <h1>Teacher Dashboard </h1>
+            <h1>Teacher Dashboard</h1>
             <p>Welcome Teacher! You can view students and monitor records, but you cannot add or edit student details.</p>
 
             <a href="{{ route('students.index') }}" class="btn btn-teacher">View Students</a>

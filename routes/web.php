@@ -2,38 +2,45 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\UserController;  
-
-
-
-
-Route::get('/', function () { return view('welcome');});
-
-
-require __DIR__.'/auth.php';
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
-| Authenticated Users
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/', function () {
+    return view('welcome');
+});
+
+require __DIR__ . '/auth.php';
+
+/*
+|--------------------------------------------------------------------------
+| Authenticated Users (ADMIN & TEACHER)
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
 
+    // Redirect after login based on role
     Route::get('/dashboard', function () {
-        return auth()->user()->role === 'Admin'
+        return auth()->user()->role === 'admin'
             ? redirect()->route('admin.dashboard')
             : redirect()->route('teacher.dashboard');
     })->name('dashboard');
 
+    // Dashboards
     Route::get('/admin/dashboard', fn () => view('dashboard'))
         ->name('admin.dashboard');
 
     Route::get('/teacher/dashboard', fn () => view('dashboard'))
         ->name('teacher.dashboard');
 
+    // Profile
     Route::get('/profile', fn () => view('profile.edit'))
         ->name('profile.edit');
 
+    // Students (view only)
     Route::get('/students', [StudentController::class, 'index'])
         ->name('students.index');
 
@@ -43,7 +50,7 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Admin Only
+| Admin Only Routes
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'admin'])->group(function () {

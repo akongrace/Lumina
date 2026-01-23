@@ -18,7 +18,7 @@ class AdminUserSeeder extends Seeder
             'name' => 'Admin Lumina',
             'email' => 'admin@lumina.com',
             'password' => Hash::make('admin12345'),
-            'role' => 'Admin',
+            'role' => 'admin',
         ]);   
     }
 }

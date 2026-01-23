@@ -15,7 +15,7 @@ class TeacherSeeder extends Seeder
             [
                 'name' => 'Teacher Account',
                 'password' => Hash::make('Teacher123!'),
-                'role' => 'Teacher',
+                'role' => 'teacher',
             ]
         );
 
@@ -24,7 +24,7 @@ class TeacherSeeder extends Seeder
             [
                 'name' => 'Teacher 2',
                 'password' => Hash::make('Teacher123!'),
-                'role' => 'Teacher',
+                'role' => 'teacher',
             ]
         );
     }

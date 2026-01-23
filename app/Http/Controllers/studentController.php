@@ -42,21 +42,29 @@ class StudentController extends Controller
             'parent_name'    => 'required|string|max:255',
             'parent_contact' => 'required|string|max:255',
             'parent_email'   => 'required|email|max:255',
-            'pickup_code'    => 'required|string|unique:students,pickup_code|max:255',
             'address'        => 'nullable|string|max:255',
+
+
         ]);
 
-      if ($request->hasFile('photo')) {
+        if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('photos', 'public');
             $validated['photo'] = $path;
 
-  
         }
+
         Student::create($validated);
 
-        return redirect()->route('students.index') ->with('success', 'Student added successfully!');
+        return redirect()->route('students.index')
+            ->with('success', 'Student added successfully!');
     }
-        public function edit(Student $student)
+
+    public function show(Student $student)
+    {
+        return view('students.show', compact('student'));
+    }
+
+    public function edit(Student $student)
     {
         return view('students.edit', compact('student'));
     }
@@ -64,45 +72,51 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         $validated = $request->validate([
+            'photo'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'student_name'   => 'required|string|max:255',
             'gender'         => 'nullable|string|max:50',
             'date_of_birth'  => 'nullable|date',
             'class'          => 'required|string|max:255',
             'class_section'  => 'required|string|max:255',
-            'nim'            => 'required|string||unique:students,nim,' . $student->id,
+            'nim'            => 'required|string|unique:students,nim,' . $student->id,
             'parent_name'    => 'required|string|max:255',
             'parent_contact' => 'required|string|max:255',
             'parent_email'   => 'required|email|max:255',
-            'pickup_code'    => 'nullable|string|unique:students,pickup_code,' . $student->id,
+            'pickup_code'    => 'required|string|unique:students,pickup_code,' . $student->id,
             'address'        => 'nullable|string|max:255',
         ]);
 
+        // admin only
+        if (auth()->user()->role === 'admin') {
+            $validated['pickup_code'] = $request->validate([
+                'pickup_code' => 'required|string|unique:students,pickup_code,' . $student->id,
+            ])['pickup_code'];
+        }
+
+        if ($request->hasFile('photo')) {
+            $validated['photo'] = $request->file('photo')->store('photos', 'public');
+        }
+
         $student->update($validated);
 
-        return redirect()->route('students.index')->with('success', 'Student updated successfully!');
+        return redirect()->route('students.index')
+            ->with('success', 'Student updated successfully!');
     }
 
     public function destroy(Student $student)
     {
         $student->delete();
 
-        return redirect()->route('students.index')->with('success', 'Student deleted successfully!');
+        return redirect()->route('students.index')
+            ->with('success', 'Student deleted successfully!');
     }
 
+    public function restore($id)
+    {
+        $student = Student::withTrashed()->findOrFail($id);
+        $student->restore();
 
-  public function restore($id)
-  {
-         
-    $student = Student::withTrashed()->findOrFail($id);
-    $student->restore();
-
-    return redirect()->route('students.index')->with('success', 'Student restored successfully!');
-
-  }
-
-public function show(Student $student)
-{
-    return view('students.show', compact('student'));
+        return redirect()->route('students.index')
+            ->with('success', 'Student restored successfully!');
+    }
 }
-}
-

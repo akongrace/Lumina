@@ -30,7 +30,7 @@
     <h2 class="text-center mb-4 fw-bold">Students List</h2>
 
     {{-- Admin only Add Student --}}
-    @if(auth()->user()->role === 'Admin')
+    @if(auth()->user()->role === 'admin')
         <a href="{{ route('students.create') }}" class="btn btn-success mb-3">+ Add Student</a>
     @endif
 
@@ -68,7 +68,7 @@
 
                     <tbody>
                         @forelse($students as $student)
-                            <tr>
+                            <tr class="{{ $student->trashed() ? 'table-warning' : '' }}">
                                 <td>{{ $student->id }}</td>
 
                                 <td>
@@ -92,7 +92,7 @@
                                 <td>{{ $student->parent_email }}</td>
 
                                 <td>
-                                    @if(auth()->user()->role === 'Admin')
+                                    @if(auth()->user()->role === 'admin')
                                         {{ $student->pickup_code }}
                                     @else
                                         Hidden
@@ -106,23 +106,42 @@
                                         View
                                     </a>
 
-                                    {{-- Admin only Edit/Delete --}}
-                                    @if(auth()->user()->role === 'Admin')
-                                        <a href="{{ route('students.edit', $student->id) }}"
-                                           class="btn btn-primary btn-sm mb-1">
-                                            Edit
-                                        </a>
+                                    {{-- Admin only --}}
+                                    @if(auth()->user()->role === 'admin')
 
-                                        <form action="{{ route('students.destroy', $student->id) }}"
-                                              method="POST"
-                                              style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger btn-sm mb-1"
-                                                    onclick="return confirm('Are you sure?')">
-                                                Delete
-                                            </button>
-                                        </form>
+                                        {{-- Edit only when NOT deleted --}}
+                                        @if(!$student->trashed())
+                                            <a href="{{ route('students.edit', $student->id) }}"
+                                               class="btn btn-primary btn-sm mb-1">
+                                                Edit
+                                            </a>
+                                        @endif
+
+                                        {{-- Restore only when deleted --}}
+                                        @if($student->trashed())
+                                            <form action="{{ route('students.restore', $student->id) }}"
+                                                  method="POST"
+                                                  style="display:inline-block;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-warning btn-sm mb-1">
+                                                    Restore
+                                                </button>
+                                            </form>
+                                        @else
+                                            {{-- Delete only when NOT deleted --}}
+                                            <form action="{{ route('students.destroy', $student->id) }}"
+                                                  method="POST"
+                                                  style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-sm mb-1"
+                                                        onclick="return confirm('Are you sure?')">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        @endif
+
                                     @endif
                                 </td>
                             </tr>
